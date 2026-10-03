@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AlgoBet - Dashboard</title>
+  <title>AlgoFootball - Dashboard</title>
   <link rel="icon" type="image/png" href="logo.png">
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -39,7 +39,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
         </div>
-        <span class="text-xl font-black tracking-wider text-white">Algo<span class="text-emerald-400">Bet</span></span>
+        <span class="text-xl font-black tracking-wider text-white">Algo<span class="text-emerald-400">Football</span></span>
       </a>
 
       <!-- Navigation Links -->
@@ -95,7 +95,7 @@
         <div class="space-y-2 max-w-2xl">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700">
             <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-            <span id="banner-tag">AlgoBet Control Center</span>
+            <span id="banner-tag">AlgoFootball Control Center</span>
           </div>
           <h1 id="banner-title" class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Loading Dashboard...</h1>
           <p id="banner-subtitle" class="text-sm text-slate-400 leading-relaxed">Checking account permissions and updating live match predictions.</p>
@@ -198,7 +198,7 @@
             <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
             </svg>
-            Rate Your AlgoBet Experience
+            Rate Your AlgoFootball Experience
           </h2>
           <p class="text-xs text-slate-400 mt-1">Help us refine our algorithmic predictions by leaving your honest feedback.</p>
         </div>
@@ -220,7 +220,7 @@
           <!-- Review Textarea -->
           <div>
             <label for="review-text" class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Your Review</label>
-            <textarea id="review-text" rows="3" required placeholder="Share your experience with AlgoBet..."
+            <textarea id="review-text" rows="3" required placeholder="Share your experience with AlgoFootball..."
               class="w-full bg-slate-800/80 border border-slate-700/80 rounded-xl p-3.5 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-sm transition-all"></textarea>
           </div>
 
@@ -299,11 +299,11 @@
   <footer class="bg-slate-900/90 border-t border-slate-800 py-8 px-4 sm:px-8 mt-12 text-xs text-slate-500">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
       <div class="flex items-center gap-2">
-        <span class="font-bold text-white">Algo<span class="text-emerald-400">Bet</span></span>
+        <span class="font-bold text-white">Algo<span class="text-emerald-400">Football</span></span>
         <span>— Responsible Gambling 18+</span>
       </div>
       <p>Sports betting involves risk. Past performance does not guarantee future algorithmic results.</p>
-      <p>© 2026 AlgoBet. All rights reserved.</p>
+      <p>© 2026 AlgoFootball. All rights reserved.</p>
     </div>
   </footer>
 
@@ -344,7 +344,7 @@
     // Traffic Analytics Collector Function
     async function collecterEtSauvegarder(typeInfo) {
       try {
-        const storedSession = JSON.parse(localStorage.getItem("algobet_user_session") || sessionStorage.getItem("algobet_user_session") || "{}");
+        const storedSession = JSON.parse(localStorage.getItem("algofootball_user_session") || sessionStorage.getItem("algofootball_user_session") || "{}");
         const currentEmail = auth.currentUser?.email || storedSession.email || "guest";
 
         const payload = {
@@ -388,15 +388,15 @@
     // Synchronous Session Verification
     function getStoredSession() {
       try {
-        const rawLocal = localStorage.getItem("algobet_user_session");
-        const rawSession = sessionStorage.getItem("algobet_user_session");
+        const rawLocal = localStorage.getItem("algofootball_user_session");
+        const rawSession = sessionStorage.getItem("algofootball_user_session");
         const session = rawLocal ? JSON.parse(rawLocal) : (rawSession ? JSON.parse(rawSession) : null);
         if (session && session.expiry && new Date().getTime() < session.expiry) {
           return session;
         }
       } catch (e) {
-        localStorage.removeItem("algobet_user_session");
-        sessionStorage.removeItem("algobet_user_session");
+        localStorage.removeItem("algofootball_user_session");
+        sessionStorage.removeItem("algofootball_user_session");
       }
       return null;
     }
@@ -415,8 +415,8 @@
     // Firebase Auth Observer
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
-        localStorage.removeItem("algobet_user_session");
-        sessionStorage.removeItem("algobet_user_session");
+        localStorage.removeItem("algofootball_user_session");
+        sessionStorage.removeItem("algofootball_user_session");
         window.location.href = "login.html";
         return;
       }
@@ -449,8 +449,8 @@
     document.getElementById("signout-btn").addEventListener("click", async () => {
       await collecterEtSauvegarder("click_sign_out");
       await signOut(auth);
-      localStorage.removeItem("algobet_user_session");
-      sessionStorage.removeItem("algobet_user_session");
+      localStorage.removeItem("algofootball_user_session");
+      sessionStorage.removeItem("algofootball_user_session");
       window.location.href = "login.html";
     });
 
@@ -776,7 +776,7 @@
 
       try {
         await addDoc(collection(db, "testimonials"), {
-          userName: currentUserProfile?.fullName || auth.currentUser.displayName || "AlgoBet User",
+          userName: currentUserProfile?.fullName || auth.currentUser.displayName || "AlgoFootball User",
           userEmail: auth.currentUser.email,
           rating: selectedRating,
           reviewText: reviewText,
@@ -1005,7 +1005,7 @@
 
                     const cardFooterHTML = `
                         <div class="mt-4 pt-3 border-t border-slate-800/60 flex items-center justify-between text-[11px] text-slate-500">
-                            <span>AlgoBet Verified System</span>
+                            <span>AlgoFootball Verified System</span>
                             <span class="font-mono"><i class="fa-solid fa-lock text-[10px] mr-1"></i>Deterministic</span>
                         </div>
                     `;

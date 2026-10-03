@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AlgoBet - AI-Powered Football Predictions & Deterministic Odds</title>
+    <title>AlgoFootball - AI-Powered Football Predictions & Deterministic Odds</title>
     <link rel="icon" type="image/png" href="logo.png">
     <!-- Tailwind CSS v3 CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -54,7 +54,7 @@
                 <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center text-slate-950 shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform">
                     <i class="fa-solid fa-chart-line text-xl font-bold"></i>
                 </div>
-                <span class="text-2xl font-extrabold tracking-tight text-white">Algo<span class="text-emerald-400">Bet</span></span>
+                <span class="text-2xl font-extrabold tracking-tight text-white">Algo<span class="text-emerald-400">Football</span></span>
             </a>
 
             <!-- Navigation Links -->
@@ -313,7 +313,7 @@
                     </span>
                     <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-4">Upcoming Matches & Predictions</h2>
                     <p class="text-slate-400 text-base">
-                        Real-time match odds analyzed by AlgoBet core engine. Non-members must unlock their 30-day free tier to view predictions.
+                        Real-time match odds analyzed by AlgoFootball core engine. Non-members must unlock their 30-day free tier to view predictions.
                     </p>
                 </div>
 
@@ -371,10 +371,10 @@
                         <div class="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center text-slate-950 font-bold">
                             <i class="fa-solid fa-chart-line"></i>
                         </div>
-                        <span class="text-xl font-bold text-white">AlgoBet</span>
+                        <span class="text-xl font-bold text-white">AlgoFootball</span>
                     </div>
                     <p class="text-xs text-slate-400 leading-relaxed max-w-md">
-                        Responsible Gambling 18+. AlgoBet provides statistical analysis and algorithmic models for educational and entertainment purposes. We do not accept real-money bets directly.
+                        Responsible Gambling 18+. AlgoFootball provides statistical analysis and algorithmic models for educational and entertainment purposes. We do not accept real-money bets directly.
                     </p>
                 </div>
                 <div>
@@ -396,7 +396,7 @@
                 </div>
             </div>
             <div class="pt-8 border-t border-slate-900 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-400 gap-4">
-                <p>&copy; 2026 AlgoBet Platform. All rights reserved.</p>
+                <p>&copy; 2026 AlgoFootball Platform. All rights reserved.</p>
                 <p>Designed with High-Yield Analytics Engine.</p>
             </div>
         </div>
@@ -487,7 +487,7 @@
 
         // 2. Session Management
         function getActiveSession() {
-            const rawSession = localStorage.getItem("algobet_user_session") || sessionStorage.getItem("algobet_user_session");
+            const rawSession = localStorage.getItem("algofootball_user_session") || sessionStorage.getItem("algofootball_user_session");
             if (!rawSession) return null;
             
             try {
@@ -504,8 +504,8 @@
         }
 
         function clearActiveSession() {
-            localStorage.removeItem("algobet_user_session");
-            sessionStorage.removeItem("algobet_user_session");
+            localStorage.removeItem("algofootball_user_session");
+            sessionStorage.removeItem("algofootball_user_session");
         }
 
         // Render Navigation User Zone
@@ -721,7 +721,7 @@
                     `;
                 });
 
-                container.innerHTML = combosHtml || `<div class="col-span-3 text-center text-slate-400">Loading AlgoBet historical cache...</div>`;
+                container.innerHTML = combosHtml || `<div class="col-span-3 text-center text-slate-400">Loading AlgoFootball historical cache...</div>`;
 
             } catch (err) {
                 console.error("Error loading sneak peek:", err);
@@ -842,10 +842,10 @@
 
         // 7. Testimonials & Rating Module (20 Default English Testimonials)
         const TESTIMONIALS_DATA = [
-            { name: "Michael R.", avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80", text: "AlgoBet completely changed my sports analytics routine. The deterministic combos hit with frightening accuracy!", date: "2026-09-21" },
+            { name: "Michael R.", avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80", text: "AlgoFootball completely changed my sports analytics routine. The deterministic combos hit with frightening accuracy!", date: "2026-09-21" },
             { name: "David K.", avatar: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=100&auto=format&fit=crop&q=80", text: "80%+ win rate sounded like hype until I tested the 30-day trial. The ROI speaks for itself.", date: "2026-09-20" },
             { name: "Sarah L.", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80", text: "Clean interface, zero fluff. The pinnacle odds comparisons are extremely reliable.", date: "2026-09-19" },
-            { name: "James P.", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80", text: "I've tried multiple tipster platforms over the years, but AlgoBet's mathematical models are unmatched.", date: "2026-09-18" },
+            { name: "James P.", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80", text: "I've tried multiple tipster platforms over the years, but AlgoFootball's mathematical models are unmatched.", date: "2026-09-18" },
             { name: "Alex V.", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80", text: "The odd multiplications on 3-match combos consistently deliver high yield returns.", date: "2026-09-17" },
             { name: "Robert M.", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&auto=format&fit=crop&q=80", text: "Outstanding system! The transparency in historical results built complete confidence.", date: "2026-09-16" },
             { name: "Elena R.", avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&auto=format&fit=crop&q=80", text: "As a data analyst, I appreciate the algorithmic approach behind every single prediction.", date: "2026-09-15" },
@@ -857,7 +857,7 @@
             { name: "Laura B.", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80", text: "Simple, effective, and straight to the point predictions.", date: "2026-09-09" },
             { name: "Patrick F.", avatar: "https://images.unsplash.com/photo-1513956589380-bad6acb9b9d4?w=100&auto=format&fit=crop&q=80", text: "Loved how easy it was to activate the free member tier.", date: "2026-09-08" },
             { name: "Antoine D.", avatar: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=100&auto=format&fit=crop&q=80", text: "Great coverage across international leagues including Lithuania and Germany.", date: "2026-09-07" },
-            { name: "Oliver S.", avatar: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=100&auto=format&fit=crop&q=80", text: "AlgoBet turns raw data into pure betting value.", date: "2026-09-06" },
+            { name: "Oliver S.", avatar: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=100&auto=format&fit=crop&q=80", text: "AlgoFootball turns raw data into pure betting value.", date: "2026-09-06" },
             { name: "Jessica W.", avatar: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=100&auto=format&fit=crop&q=80", text: "Top-notch security and excellent prediction accuracy.", date: "2026-09-05" },
             { name: "Liam N.", avatar: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=100&auto=format&fit=crop&q=80", text: "The daily stats breakdown gives me full clarity on ROI.", date: "2026-09-04" },
             { name: "Ethan C.", avatar: "https://images.unsplash.com/photo-1530268729831-4b0b9e170218?w=100&auto=format&fit=crop&q=80", text: "By far the most sophisticated football prediction tool I have encountered.", date: "2026-09-03" },
@@ -1124,7 +1124,7 @@
 
                     const cardFooterHTML = `
                         <div class="mt-4 pt-3 border-t border-slate-800/60 flex items-center justify-between text-[11px] text-slate-500">
-                            <span>AlgoBet Verified System</span>
+                            <span>AlgoFootball Verified System</span>
                             <span class="font-mono"><i class="fa-solid fa-lock text-[10px] mr-1"></i>Deterministic</span>
                         </div>
                     `;

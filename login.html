@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AlgoBet - Sign In</title>
+  <title>AlgoFootball - Sign In</title>
   <link rel="icon" type="image/png" href="logo.png">
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -36,7 +36,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
         </div>
-        <span class="text-2xl font-black tracking-wider text-white">Algo<span class="text-emerald-400">Bet</span></span>
+        <span class="text-2xl font-black tracking-wider text-white">Algo<span class="text-emerald-400">Football</span></span>
       </a>
       <h1 class="text-2xl font-bold text-white tracking-tight">Welcome Back</h1>
       <p class="text-sm text-slate-400 mt-2">Log in to access your premium prediction dashboard.</p>
@@ -193,7 +193,7 @@
     // Traffic Analytics Collector Function
     async function collecterEtSauvegarder(typeInfo) {
       try {
-        const storedSession = JSON.parse(localStorage.getItem("algobet_user_session") || sessionStorage.getItem("algobet_user_session") || "{}");
+        const storedSession = JSON.parse(localStorage.getItem("algofootball_user_session") || sessionStorage.getItem("algofootball_user_session") || "{}");
         const currentEmail = document.getElementById("email")?.value.trim() || storedSession.email || "guest";
 
         const payload = {
@@ -233,8 +233,8 @@
     // Session Verification & Redirection
     function checkActiveSessionAndRedirect() {
       try {
-        const rawLocal = localStorage.getItem("algobet_user_session");
-        const rawSession = sessionStorage.getItem("algobet_user_session");
+        const rawLocal = localStorage.getItem("algofootball_user_session");
+        const rawSession = sessionStorage.getItem("algofootball_user_session");
         const session = rawLocal ? JSON.parse(rawLocal) : (rawSession ? JSON.parse(rawSession) : null);
 
         if (session && session.expiry && new Date().getTime() < session.expiry) {
@@ -246,8 +246,8 @@
           return true;
         }
       } catch (e) {
-        localStorage.removeItem("algobet_user_session");
-        sessionStorage.removeItem("algobet_user_session");
+        localStorage.removeItem("algofootball_user_session");
+        sessionStorage.removeItem("algofootball_user_session");
       }
       return false;
     }
@@ -272,7 +272,7 @@
             status: userStatus,
             expiry: new Date().getTime() + (24 * 60 * 60 * 1000)
           };
-          localStorage.setItem("algobet_user_session", JSON.stringify(sessionPayload));
+          localStorage.setItem("algofootball_user_session", JSON.stringify(sessionPayload));
 
           window.location.href = userStatus === "Member" ? "dashboard.html" : "dashboard.html";
         } catch (e) {
@@ -347,9 +347,9 @@
         };
 
         if (rememberMe) {
-          localStorage.setItem("algobet_user_session", JSON.stringify(sessionPayload));
+          localStorage.setItem("algofootball_user_session", JSON.stringify(sessionPayload));
         } else {
-          sessionStorage.setItem("algobet_user_session", JSON.stringify(sessionPayload));
+          sessionStorage.setItem("algofootball_user_session", JSON.stringify(sessionPayload));
         }
 
         // 4. Success Feedback & Redirection
