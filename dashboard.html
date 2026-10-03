@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-950">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlgoBet - Dashboard</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-emerald-500 selection:text-slate-950 antialiased">
+
+  <!-- Toast Notification System -->
+  <div id="toast-container" class="fixed top-20 right-4 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none"></div>
+
+  <!-- FIXED NAVBAR -->
+  <header class="bg-slate-900/90 border-b border-slate-800 backdrop-blur-xl sticky top-0 z-40 px-4 py-3 sm:px-8">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="flex items-center gap-2 group transition-transform duration-200 hover:scale-105">
+        <div class="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </div>
+        <span class="text-xl font-black tracking-wider text-white">Algo<span class="text-emerald-400">Bet</span></span>
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+        <a href="dashboard.html" class="text-emerald-400 font-semibold flex items-center gap-1.5">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+          </svg>
+          Dashboard
+        </a>
+        <a href="history.html" class="text-slate-400 hover:text-slate-200 transition-colors flex items-center gap-1.5">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          Full Match History
+        </a>
+      </nav>
+
+      <!-- User Profile Controls -->
+      <div class="flex items-center gap-3">
+        <!-- Account Status Badge -->
+        <div id="user-status-badge" class="bg-slate-800 text-slate-400 border border-slate-700 px-3 py-1 rounded-full text-xs font-semibold tracking-wide flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-slate-500 animate-pulse"></span>
+          <span>LOADING...</span>
+        </div>
+
+        <!-- User Email -->
+        <span id="user-email-display" class="hidden lg:inline text-xs font-medium text-slate-400 truncate max-w-[160px]"></span>
+
+        <!-- Upgrade Button -->
+        <a id="nav-upgrade-btn" href="checkout.html" class="hidden bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-3.5 py-1.5 rounded-lg text-xs transition-all shadow-md shadow-emerald-500/10 flex items-center gap-1">
+          <span>Become Member</span>
+        </a>
+
+        <!-- Sign Out Button -->
+        <button id="signout-btn" class="bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+          <span class="hidden sm:inline">Sign Out</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MAIN DASHBOARD CONTENT -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 py-8 sm:px-8 space-y-10">
+
+    <!-- HERO STATUS BANNER -->
+    <section id="status-banner" class="rounded-2xl p-6 sm:p-8 border shadow-2xl relative overflow-hidden transition-all duration-300 bg-slate-900 border-slate-800">
+      <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div class="space-y-2 max-w-2xl">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <span id="banner-tag">AlgoBet Control Center</span>
+          </div>
+          <h1 id="banner-title" class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Loading Dashboard...</h1>
+          <p id="banner-subtitle" class="text-sm text-slate-400 leading-relaxed">Checking account permissions and updating live match predictions.</p>
+        </div>
+        <div id="banner-cta-container"></div>
+      </div>
+      <!-- Background Graphic Glow -->
+      <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
+    </section>
+
+
+<!-- RECENT HISTORY COMBOS SECTION -->
+<section class="space-y-6">
+    <!-- En-tête de la section (Même structure et dimensions que Upcoming Predictions) -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+        <div>
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                <i class="fa-solid fa-clock-rotate-left text-emerald-400 text-lg"></i>
+                Recent Match History & Algorithmic Combos
+            </h2>
+            <p class="text-xs text-slate-400 mt-1">100% verifiable track record, deterministically generated from historical odds.</p>
+        </div>
+        
+        <!-- Bouton Vers history.html -->
+        <a href="history.html" class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl shadow-md transition-all hover:scale-105 shrink-0 self-start sm:self-auto">
+            <span>See All History</span>
+            <i class="fa-solid fa-arrow-right text-xs"></i>
+        </a>
+    </div>
+
+    <!-- Conteneur d'affichage dynamique des 3 combos -->
+    <div id="latest-combos-container" class="space-y-6">
+        <!-- Skeleton Loading State (Calqué exactement sur votre modèle) -->
+        <div id="latest-combos-skeleton" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-6 space-y-4 animate-pulse">
+                <div class="h-4 bg-slate-800 rounded w-1/3"></div>
+                <div class="h-16 bg-slate-800/60 rounded-xl"></div>
+                <div class="h-12 bg-slate-800 rounded-xl"></div>
+            </div>
+            <div class="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-6 space-y-4 animate-pulse hidden md:block">
+                <div class="h-4 bg-slate-800 rounded w-1/3"></div>
+                <div class="h-16 bg-slate-800/60 rounded-xl"></div>
+                <div class="h-12 bg-slate-800 rounded-xl"></div>
+            </div>
+            <div class="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-6 space-y-4 animate-pulse hidden lg:block">
+                <div class="h-4 bg-slate-800 rounded w-1/3"></div>
+                <div class="h-16 bg-slate-800/60 rounded-xl"></div>
+                <div class="h-12 bg-slate-800 rounded-xl"></div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-12 text-center" style="padding-bottom: 20px;">
+        <a href="history.html" class="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-emerald-500 hover:bg-emerald-300 text-black font-bold text-sm border border-slate-700 transition-all duration-300 shadow-lg" onclick="trackButtonClick('sneak_peek_bottom_button')">
+            <!-- <i class="fa-solid fa-database"></i> -->
+            <span>See Full History (&gt; 5,000 Matches)</span>
+        </a>
+    </div>
+</section>
+
+
+    <!-- UPCOMING PREDICTIONS SECTION -->
+    <section class="space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+        <div>
+          <h2 class="text-xl font-bold text-white flex items-center gap-2">
+            <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+            </svg>
+            Upcoming Matches & Algorithmic Predictions
+          </h2>
+          <p class="text-xs text-slate-400 mt-1">Real-time model confidence, recommended value picks, and Pinnacle live odds.</p>
+        </div>
+        <div class="flex items-center gap-2 text-xs text-slate-400">
+          <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+          <span>Live Firestore Sync</span>
+        </div>
+      </div>
+
+      <!-- Match Cards Grid -->
+      <div id="matches-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Skeleton Loading State -->
+        <div class="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-6 space-y-4 animate-pulse">
+          <div class="h-4 bg-slate-800 rounded w-1/3"></div>
+          <div class="h-16 bg-slate-800/60 rounded-xl"></div>
+          <div class="h-12 bg-slate-800 rounded-xl"></div>
+        </div>
+        <div class="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-6 space-y-4 animate-pulse hidden md:block">
+          <div class="h-4 bg-slate-800 rounded w-1/3"></div>
+          <div class="h-16 bg-slate-800/60 rounded-xl"></div>
+          <div class="h-12 bg-slate-800 rounded-xl"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIAL / RATING SECTION -->
+    <section class="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-6 sm:p-8 backdrop-blur-sm relative overflow-hidden">
+      <div class="max-w-2xl space-y-6">
+        <div>
+          <h2 class="text-xl font-bold text-white flex items-center gap-2">
+            <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+            </svg>
+            Rate Your AlgoBet Experience
+          </h2>
+          <p class="text-xs text-slate-400 mt-1">Help us refine our algorithmic predictions by leaving your honest feedback.</p>
+        </div>
+
+        <!-- FORM FOR MEMBERS -->
+        <form id="review-form" class="space-y-4">
+          <!-- Star Picker -->
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Your Rating</label>
+            <div id="star-rating-container" class="flex items-center gap-1 cursor-pointer">
+              <button type="button" data-value="1" class="star-btn text-slate-700 hover:text-amber-400 transition-colors p-1 text-2xl">★</button>
+              <button type="button" data-value="2" class="star-btn text-slate-700 hover:text-amber-400 transition-colors p-1 text-2xl">★</button>
+              <button type="button" data-value="3" class="star-btn text-slate-700 hover:text-amber-400 transition-colors p-1 text-2xl">★</button>
+              <button type="button" data-value="4" class="star-btn text-slate-700 hover:text-amber-400 transition-colors p-1 text-2xl">★</button>
+              <button type="button" data-value="5" class="star-btn text-slate-700 hover:text-amber-400 transition-colors p-1 text-2xl">★</button>
+            </div>
+          </div>
+
+          <!-- Review Textarea -->
+          <div>
+            <label for="review-text" class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Your Review</label>
+            <textarea id="review-text" rows="3" required placeholder="Share your experience with AlgoBet..."
+              class="w-full bg-slate-800/80 border border-slate-700/80 rounded-xl p-3.5 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-sm transition-all"></textarea>
+          </div>
+
+          <!-- Submit Review Button -->
+          <button type="submit" id="submit-review-btn"
+            class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-6 py-3 rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/20 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm">
+            <svg id="review-spinner" class="hidden animate-spin h-4 w-4 text-slate-950" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span id="review-btn-text">Submit Review</span>
+          </button>
+        </form>
+
+        <!-- LOCKED OVERLAY FOR NON-MEMBERS -->
+        <div id="review-locked-box" class="hidden bg-slate-950/60 border border-slate-800 rounded-xl p-6 text-center space-y-3">
+          <div class="w-10 h-10 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center mx-auto">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
+          <h3 class="text-sm font-bold text-white">Only Premium Members can leave reviews and ratings.</h3>
+          <p class="text-xs text-slate-400">Upgrade your account to unlock full platform access and share your feedback with our community.</p>
+          <a href="checkout.html" class="inline-block bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs transition-colors">
+            Unlock Premium Access
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- UNLOCK VIP PREDICTIONS MODAL -->
+  <div id="unlock-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 backdrop-blur-md bg-slate-950/80 transition-opacity">
+    <div class="max-w-md w-full bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-5 relative">
+      <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+        </svg>
+      </div>
+      
+      <div>
+        <h3 class="text-xl font-bold text-white">Unlock VIP Predictions</h3>
+        <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+          This match prediction, confidence index, and Pinnacle value odds are reserved exclusively for Premium Members.
+        </p>
+      </div>
+
+      <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50 space-y-2 text-xs">
+        <div class="flex items-center gap-2 text-slate-300">
+          <span class="text-emerald-400">✓</span>
+          <span>94.2% Historical Algorithmic Precision</span>
+        </div>
+        <div class="flex items-center gap-2 text-slate-300">
+          <span class="text-emerald-400">✓</span>
+          <span>Real-time Pinnacle Odds Movements</span>
+        </div>
+        <div class="flex items-center gap-2 text-slate-300">
+          <span class="text-emerald-400">✓</span>
+          <span>Instant Telegram & Dashboard Alerts</span>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-3 pt-2">
+        <button type="button" id="close-modal-btn" class="px-4 py-2.5 rounded-xl border border-slate-700 text-xs font-semibold text-slate-300 hover:bg-slate-800 transition-colors">
+          Dismiss
+        </button>
+        <a id="modal-upgrade-link" href="checkout.html" class="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold transition-all shadow-md shadow-emerald-500/10">
+          Upgrade Now
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- STANDARDIZED FOOTER -->
+  <footer class="bg-slate-900/90 border-t border-slate-800 py-8 px-4 sm:px-8 mt-12 text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+      <div class="flex items-center gap-2">
+        <span class="font-bold text-white">Algo<span class="text-emerald-400">Bet</span></span>
+        <span>— Responsible Gambling 18+</span>
+      </div>
+      <p>Sports betting involves risk. Past performance does not guarantee future algorithmic results.</p>
+      <p>© 2026 AlgoBet. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Firebase v12 Module Integration & Logic Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+    // import { getFirestore, collection, doc, getDoc, getDocs, addDoc, setDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+    import { getFirestore, collection, doc, getDoc, getDocs, addDoc, setDoc, query, orderBy, where } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+    // Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyDpbpkhq3M4pW3nSBjndf7pwmfNpGEmU1o",
+      authDomain: "we-get-54b92.firebaseapp.com",
+      projectId: "we-get-54b92",
+      storageBucket: "we-get-54b92.firebasestorage.app",
+      messagingSenderId: "1048770398145",
+      appId: "1:1048770398145:web:fbe7c66361edadd427d140"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // Global App State
+    let currentUserProfile = null;
+    let selectedRating = 0;
+
+    // Custom ID Generator (YYYY-MM-DD-HH-mm-ss-XXXXX)
+    function generateCustomId() {
+      const now = new Date();
+      const pad = (n) => String(n).padStart(2, '0');
+      const timeStr = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}-${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;
+      const randomStr = Math.random().toString(36).substring(2, 7).toUpperCase();
+      return `${timeStr}-${randomStr}`;
+    }
+
+    // Traffic Analytics Collector Function
+    async function collecterEtSauvegarder(typeInfo) {
+      try {
+        const storedSession = JSON.parse(localStorage.getItem("algobet_user_session") || sessionStorage.getItem("algobet_user_session") || "{}");
+        const currentEmail = auth.currentUser?.email || storedSession.email || "guest";
+
+        const payload = {
+          event_type: typeInfo,
+          timestamp: new Date().toISOString(),
+          user_email: currentEmail,
+          page_url: window.location.href,
+          user_agent: navigator.userAgent
+        };
+
+        const documentId = generateCustomId();
+        await setDoc(doc(db, "hist_visit_pronostic_site", documentId), payload);
+      } catch (err) {
+        console.warn("Analytics error:", err);
+      }
+    }
+
+    // Toast UI Generator
+    function showToast(message, type = "success") {
+      const container = document.getElementById("toast-container");
+      const toast = document.createElement("div");
+      toast.className = `p-4 rounded-xl border text-xs font-semibold shadow-xl transition-all duration-300 transform translate-y-2 pointer-events-auto flex items-center gap-3 ${
+        type === "success" 
+          ? "bg-slate-900 border-emerald-500/50 text-emerald-400" 
+          : "bg-slate-900 border-red-500/50 text-red-400"
+      }`;
+
+      toast.innerHTML = `
+        <span>${type === 'success' ? '✓' : '✕'}</span>
+        <p class="flex-1">${message}</p>
+      `;
+
+      container.appendChild(toast);
+      setTimeout(() => toast.classList.remove("translate-y-2"), 10);
+      setTimeout(() => {
+        toast.classList.add("opacity-0", "-translate-y-2");
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    // Synchronous Session Verification
+    function getStoredSession() {
+      try {
+        const rawLocal = localStorage.getItem("algobet_user_session");
+        const rawSession = sessionStorage.getItem("algobet_user_session");
+        const session = rawLocal ? JSON.parse(rawLocal) : (rawSession ? JSON.parse(rawSession) : null);
+        if (session && session.expiry && new Date().getTime() < session.expiry) {
+          return session;
+        }
+      } catch (e) {
+        localStorage.removeItem("algobet_user_session");
+        sessionStorage.removeItem("algobet_user_session");
+      }
+      return null;
+    }
+
+    // Initial Gatekeeper Check
+    const localSession = getStoredSession();
+    if (!localSession) {
+      window.location.href = "login.html";
+    }
+
+    // DOM Ready Init
+    document.addEventListener("DOMContentLoaded", () => {
+      collecterEtSauvegarder("page_load_dashboard");
+    });
+
+    // Firebase Auth Observer
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        localStorage.removeItem("algobet_user_session");
+        sessionStorage.removeItem("algobet_user_session");
+        window.location.href = "login.html";
+        return;
+      }
+
+      try {
+        // Fetch User Profile Document from Firestore
+        const userDocRef = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userDocRef);
+
+        if (userSnap.exists()) {
+          currentUserProfile = userSnap.data();
+        } else {
+          currentUserProfile = {
+            email: user.email,
+            status: localSession?.status || "Non-Member",
+            fullName: user.displayName || ""
+          };
+        }
+
+        renderDashboardUI();
+        loadUpcomingMatches();
+
+      } catch (err) {
+        console.error("Auth initialization error:", err);
+        showToast("Error synchronizing profile data.", "error");
+      }
+    });
+
+    // Sign Out Handler
+    document.getElementById("signout-btn").addEventListener("click", async () => {
+      await collecterEtSauvegarder("click_sign_out");
+      await signOut(auth);
+      localStorage.removeItem("algobet_user_session");
+      sessionStorage.removeItem("algobet_user_session");
+      window.location.href = "login.html";
+    });
+
+    // Render Dynamic UI According to User Status
+    function renderDashboardUI() {
+      const isMember = currentUserProfile?.status === "Member";
+      const statusBadge = document.getElementById("user-status-badge");
+      const emailDisplay = document.getElementById("user-email-display");
+      const upgradeBtn = document.getElementById("nav-upgrade-btn");
+      const banner = document.getElementById("status-banner");
+      const bannerTag = document.getElementById("banner-tag");
+      const bannerTitle = document.getElementById("banner-title");
+      const bannerSubtitle = document.getElementById("banner-subtitle");
+      const bannerCtaContainer = document.getElementById("banner-cta-container");
+      const reviewForm = document.getElementById("review-form");
+      const reviewLockedBox = document.getElementById("review-locked-box");
+
+      // Email Display
+      if (emailDisplay) emailDisplay.textContent = currentUserProfile.email || auth.currentUser.email;
+
+      // Status Badge Styling
+      if (isMember) {
+        statusBadge.className = "bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-3 py-1 rounded-full text-xs font-semibold tracking-wide flex items-center gap-1.5";
+        statusBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400"></span><span>PREMIUM MEMBER</span>`;
+        upgradeBtn.classList.add("hidden");
+      } else {
+        statusBadge.className = "bg-amber-500/10 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-full text-xs font-semibold tracking-wide flex items-center gap-1.5";
+        statusBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-400"></span><span>NOT MEMBER</span>`;
+        upgradeBtn.classList.remove("hidden");
+        upgradeBtn.addEventListener("click", () => collecterEtSauvegarder("click_become_member"));
+      }
+
+      // Banner Dynamic Styling
+      if (isMember) {
+        banner.className = "rounded-2xl p-6 sm:p-8 border shadow-2xl relative overflow-hidden transition-all duration-300 bg-emerald-950/30 border-emerald-500/30 shadow-emerald-500/5";
+        bannerTag.textContent = "VIP Access Granted";
+        bannerTitle.textContent = "Welcome Back! Your Premium Access is Active.";
+        bannerSubtitle.textContent = "Enjoy unrestricted access to all high-precision predictions, confidence indices, and Pinnacle value odds.";
+        bannerCtaContainer.innerHTML = `
+          <a href="history.html" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-5 py-3 rounded-xl text-xs transition-all flex items-center gap-2 shrink-0">
+            <span>View Full Match History</span>
+            <span>→</span>
+          </a>
+        `;
+      } else {
+        banner.className = "rounded-2xl p-6 sm:p-8 border shadow-2xl relative overflow-hidden transition-all duration-300 bg-amber-950/20 border-amber-500/30 shadow-amber-500/5";
+        bannerTag.textContent = "Free Tier Account";
+        bannerTitle.textContent = "Activate Your 30-Day Free Trial!";
+        bannerSubtitle.textContent = "Unlock high-precision algorithmic predictions instantly and gain the edge on upcoming fixtures.";
+        bannerCtaContainer.innerHTML = `
+          <a href="checkout.html" onclick="collecterEtSauvegarder('click_become_member')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-3 rounded-xl text-xs transition-all flex items-center gap-2 shrink-0 shadow-lg shadow-amber-500/20">
+            <span>Upgrade to Premium</span>
+            <span>→</span>
+          </a>
+        `;
+      }
+
+      // Review Section Gate
+      if (isMember) {
+        reviewForm.classList.remove("hidden");
+        reviewLockedBox.classList.add("hidden");
+      } else {
+        reviewForm.classList.add("hidden");
+        reviewLockedBox.classList.remove("hidden");
+      }
+    }
+
+    // Load Upcoming Matches from Firestore
+    async function loadUpcomingMatches() {
+      const grid = document.getElementById("matches-grid");
+      const isMember = currentUserProfile?.status === "Member";
+
+      try {
+        // const matchesRef = collection(db, "upcoming_matches");
+        // const q = query(matchesRef, orderBy("MatchDateTime", "asc"));
+        // const snapshot = await getDocs(q);
+
+        // if (snapshot.empty) {
+        //   grid.innerHTML = `
+        //     <div class="col-span-full bg-slate-900/50 border border-slate-800 rounded-2xl p-8 text-center text-slate-400">
+        //       <p class="text-sm font-medium">No upcoming predictions scheduled at this time. Check back shortly!</p>
+        //     </div>
+        //   `;
+        //   return;
+        // }
+
+        // grid.innerHTML = "";
+
+        // snapshot.forEach((docSnap) => {
+        //   const match = docSnap.data();
+        //   const matchDate = match.MatchDateTime ? new Date(match.MatchDateTime) : new Date();
+        //   const formattedDate = matchDate.toLocaleDateString("en-US", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit", timeZoneName: "short" });
+
+        //   const homeImg = match.HomeImg || "https://placehold.co/40x40/1e293b/a1a1aa?text=H";
+        //   const awayImg = match.AwayImg || "https://placehold.co/40x40/1e293b/a1a1aa?text=A";
+
+
+        const matchesRef = collection(db, "upcoming_matches");
+        const nowIso = new Date().toISOString();
+        const q = query(matchesRef, where("MatchDateTime", ">=", nowIso), orderBy("MatchDateTime", "asc"));
+        const snapshot = await getDocs(q);
+
+        if (snapshot.empty) {
+          grid.innerHTML = `
+            <div class="col-span-full bg-slate-900/50 border border-slate-800 rounded-2xl p-8 text-center text-slate-400">
+              <p class="text-sm font-medium">No upcoming predictions scheduled at this time. Check back shortly!</p>
+            </div>
+          `;
+          return;
+        }
+
+        grid.innerHTML = "";
+
+        snapshot.forEach((docSnap) => {
+          const match = docSnap.data();
+          const homeTeamName = match["Home Team"] || match.Home || "Home Team";
+          const awayTeamName = match["Away Team"] || match.Away || "Away Team";
+          const matchDate = match.MatchDateTime ? new Date(match.MatchDateTime) : new Date();
+          const formattedDate = matchDate.toLocaleDateString("en-US", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit", timeZoneName: "short" });
+
+          const homeImg = match.HomeImg || "https://placehold.co/40x40/1e293b/a1a1aa?text=H";
+          const awayImg = match.AwayImg || "https://placehold.co/40x40/1e293b/a1a1aa?text=A";
+
+
+
+
+          const card = document.createElement("div");
+          card.className = `bg-slate-900/80 border border-slate-800/80 rounded-2xl p-6 hover:border-slate-700/80 transition-all shadow-xl shadow-black/20 relative overflow-hidden backdrop-blur-sm flex flex-col justify-between gap-5 ${
+            !isMember ? "cursor-pointer group" : ""
+          }`;
+
+          if (!isMember) {
+            card.innerHTML = `
+              <!-- Header League Info -->
+              <div class="flex items-center justify-between text-xs text-slate-400 border-b border-slate-800/80 pb-3">
+                <span class="font-semibold text-slate-300 truncate">${match.League || "International League"}</span>
+                <span class="text-slate-500">${formattedDate}</span>
+              </div>
+
+              <!-- Teams & Logos -->
+              <div class="flex items-center justify-between gap-4 py-2">
+                <div class="flex items-center gap-3 flex-1">
+                  <img src="${homeImg}" alt="${homeTeamName}" class="w-8 h-8 rounded-full bg-slate-800 object-cover shrink-0">
+                  <span class="text-sm font-bold text-white truncate">${homeTeamName}</span>
+                </div>
+                <span class="text-xs font-black text-slate-600 uppercase tracking-widest">VS</span>
+                <div class="flex items-center justify-end gap-3 flex-1 text-right">
+                  <span class="text-sm font-bold text-white truncate">${awayTeamName}</span>
+                  <img src="${awayImg}" alt="${awayTeamName}" class="w-8 h-8 rounded-full bg-slate-800 object-cover shrink-0">
+                </div>
+              </div>
+
+              <!-- LOCKED CONTENT AREA -->
+              <div class="relative bg-slate-950/60 rounded-xl p-4 border border-slate-800/80 overflow-hidden">
+                <div class="filter blur-md select-none opacity-40 space-y-2 pointer-events-none">
+                  <div class="flex justify-between text-xs text-slate-300">
+                    <span>Pick: Home Win</span>
+                    <span>Confidence: 89%</span>
+                  </div>
+                  <div class="grid grid-cols-3 gap-2 text-center text-xs font-bold text-slate-400">
+                    <div class="bg-slate-800 p-2 rounded">1.95</div>
+                    <div class="bg-slate-800 p-2 rounded">3.40</div>
+                    <div class="bg-slate-800 p-2 rounded">4.10</div>
+                  </div>
+                </div>
+
+                <!-- Overlay Padlock -->
+                <div class="absolute inset-0 flex flex-col items-center justify-center bg-slate-950/40 backdrop-blur-[2px] gap-1 group-hover:scale-105 transition-transform">
+                  <div class="w-8 h-8 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                  </div>
+                  <span class="text-[11px] font-bold text-amber-300">Click to Unlock Prediction</span>
+                </div>
+              </div>
+            `;
+
+            card.addEventListener("click", () => {
+              collecterEtSauvegarder("click_unlock_match");
+              openUnlockModal();
+            });
+
+          } else {
+            // UNLOCKED VIP MEMBER CARD
+            const recPick = match.RecommendedPick || "Home Win";
+            const confidence = match.Confidence ? `${match.Confidence}%` : "85%";
+            const oddHome = match.PinnacleHome || match.Odds1 || "1.90";
+            const oddDraw = match.PinnacleDraw || match.OddsX || "3.30";
+            const oddAway = match.PinnacleAway || match.Odds2 || "4.20";
+
+            card.innerHTML = `
+              <!-- Header League Info -->
+              <div class="flex items-center justify-between text-xs text-slate-400 border-b border-slate-800/80 pb-3">
+                <span class="font-semibold text-slate-300 truncate">${match.League || "International League"}</span>
+                <span class="text-slate-500">${formattedDate}</span>
+              </div>
+
+              <!-- Teams & Logos -->
+              <div class="flex items-center justify-between gap-4 py-1">
+                <div class="flex items-center gap-3 flex-1">
+                  <img src="${homeImg}" alt="${homeTeamName}" class="w-8 h-8 rounded-full bg-slate-800 object-cover shrink-0">
+                  <span class="text-sm font-bold text-white truncate">${homeTeamName}</span>
+                </div>
+                <span class="text-xs font-black text-slate-600 uppercase tracking-widest">VS</span>
+                <div class="flex items-center justify-end gap-3 flex-1 text-right">
+                  <span class="text-sm font-bold text-white truncate">${awayTeamName}</span>
+                  <img src="${awayImg}" alt="${awayTeamName}" class="w-8 h-8 rounded-full bg-slate-800 object-cover shrink-0">
+                </div>
+              </div>
+
+              <!-- UNLOCKED PREDICTION BOX -->
+              <div class="bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-4 space-y-3">
+                <div class="flex items-center justify-between text-xs">
+                  <span class="text-slate-400 font-medium">Algorithmic Pick:</span>
+                  <span class="font-extrabold text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-md border border-emerald-500/20">${recPick}</span>
+                </div>
+
+                <div class="flex items-center justify-between text-xs">
+                  <span class="text-slate-400 font-medium">Model Confidence:</span>
+                  <span class="font-bold text-white">${confidence}</span>
+                </div>
+
+                <!-- Pinnacle Odds Grid -->
+                <div class="pt-1 border-t border-slate-800/80">
+                  <div class="text-[10px] text-slate-500 uppercase tracking-wider mb-1 font-semibold">Pinnacle Odds</div>
+                  <div class="grid grid-cols-3 gap-2 text-center text-xs">
+                    <div class="bg-slate-800/90 rounded p-1.5 border border-slate-700/50">
+                      <span class="text-slate-400 text-[10px] block">1</span>
+                      <span class="font-bold text-white">${oddHome}</span>
+                    </div>
+                    <div class="bg-slate-800/90 rounded p-1.5 border border-slate-700/50">
+                      <span class="text-slate-400 text-[10px] block">X</span>
+                      <span class="font-bold text-white">${oddDraw}</span>
+                    </div>
+                    <div class="bg-slate-800/90 rounded p-1.5 border border-slate-700/50">
+                      <span class="text-slate-400 text-[10px] block">2</span>
+                      <span class="font-bold text-white">${oddAway}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+          }
+
+          grid.appendChild(card);
+        });
+
+      } catch (err) {
+        console.error("Error fetching matches:", err);
+        grid.innerHTML = `
+          <div class="col-span-full bg-slate-900/50 border border-red-500/30 rounded-2xl p-6 text-center text-red-400 text-xs">
+            Failed to load upcoming predictions. Please refresh the page.
+          </div>
+        `;
+      }
+    }
+
+    // Modal Control Functions
+    const unlockModal = document.getElementById("unlock-modal");
+    const closeModalBtn = document.getElementById("close-modal-btn");
+
+    function openUnlockModal() {
+      unlockModal.classList.remove("hidden");
+    }
+
+    function closeUnlockModal() {
+      unlockModal.classList.add("hidden");
+    }
+
+    closeModalBtn.addEventListener("click", closeUnlockModal);
+    unlockModal.addEventListener("click", (e) => {
+      if (e.target === unlockModal) closeUnlockModal();
+    });
+
+    // Interactive Star Rating Logic
+    const starBtns = document.querySelectorAll(".star-btn");
+    starBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        selectedRating = parseInt(btn.getAttribute("data-value"));
+        updateStarUI(selectedRating);
+      });
+    });
+
+    function updateStarUI(rating) {
+      starBtns.forEach((btn) => {
+        const val = parseInt(btn.getAttribute("data-value"));
+        if (val <= rating) {
+          btn.classList.remove("text-slate-700");
+          btn.classList.add("text-amber-400");
+        } else {
+          btn.classList.remove("text-amber-400");
+          btn.classList.add("text-slate-700");
+        }
+      });
+    }
+
+    // Submit Review Handler (Members Only)
+    const reviewForm = document.getElementById("review-form");
+    const submitReviewBtn = document.getElementById("submit-review-btn");
+    const reviewSpinner = document.getElementById("review-spinner");
+    const reviewBtnText = document.getElementById("review-btn-text");
+
+    reviewForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      if (selectedRating === 0) {
+        showToast("Please select a star rating between 1 and 5.", "error");
+        return;
+      }
+
+      const reviewText = document.getElementById("review-text").value.trim();
+      if (!reviewText) {
+        showToast("Please write a short review before submitting.", "error");
+        return;
+      }
+
+      submitReviewBtn.disabled = true;
+      reviewSpinner.classList.remove("hidden");
+      reviewBtnText.textContent = "Submitting...";
+
+      await collecterEtSauvegarder("click_submit_review");
+
+      try {
+        await addDoc(collection(db, "testimonials"), {
+          userName: currentUserProfile?.fullName || auth.currentUser.displayName || "AlgoBet User",
+          userEmail: auth.currentUser.email,
+          rating: selectedRating,
+          reviewText: reviewText,
+          createdAt: new Date().toISOString()
+        });
+
+        showToast("Thank you! Your review has been submitted successfully.", "success");
+        reviewForm.reset();
+        selectedRating = 0;
+        updateStarUI(0);
+
+      } catch (err) {
+        console.error("Error submitting review:", err);
+        showToast("Failed to submit review. Please try again.", "error");
+      } finally {
+        submitReviewBtn.disabled = false;
+        reviewSpinner.classList.add("hidden");
+        reviewBtnText.textContent = "Submit Review";
+      }
+    });
+  </script>
+  
+  
+
+<!-- SCRIPT: CHARGEMENT DES 3 COMBOS DE HISTORY -->
+<script type="module">
+    import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+    import { 
+        getFirestore, 
+        collection, 
+        query, 
+        orderBy, 
+        limit, 
+        getDocs 
+    } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+    // Configuration Firebase isolée & sécurisée
+    const firebaseConfig = {
+        apiKey: "AIzaSyDpbpkhq3M4pW3nSBjndf7pwmfNpGEmU1o",
+        authDomain: "we-get-54b92.firebaseapp.com",
+        projectId: "we-get-54b92",
+        storageBucket: "we-get-54b92.firebasestorage.app",
+        messagingSenderId: "1048770398145",
+        appId: "1:1048770398145:web:fbe7c66361edadd427d140"
+    };
+
+    // Évite la réinitialisation de Firebase si déjà chargé par un autre script
+    const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+    const db = getFirestore(app);
+
+    // Fonction d'extraction dynamique des côtes et des pronostics (Identique à history.html)
+    function getMatchOddsAndPick(m) {
+        const pick = m.Pick || m.Prediction || "1X";
+        let odds = parseFloat(m.PinnacleOdds || m.Odds || 0);
+
+        if (!odds || isNaN(odds)) {
+            const homeOdd = parseFloat(m["Pinnacle Home"] || m.PinnacleHome || 0);
+            const drawOdd = parseFloat(m["Pinnacle Draw"] || m.PinnacleDraw || 0);
+            const awayOdd = parseFloat(m["Pinnacle Away"] || m.PinnacleAway || 0);
+
+            if (pick.includes("1") && homeOdd) odds = homeOdd;
+            else if (pick.includes("2") && awayOdd) odds = awayOdd;
+            else if (pick.includes("X") && drawOdd) odds = drawOdd;
+            else odds = homeOdd || awayOdd || drawOdd || 1.85;
+        }
+        return { pick, odds };
+    }
+
+    async function loadSampleCombos() {
+        const container = document.getElementById("latest-combos-container");
+        const skeleton = document.getElementById("latest-combos-skeleton");
+
+        try {
+            // Limit à 20 résultats pour un chargement instantané (< 200ms)
+            const matchesRef = collection(db, "previous_matchs_betted");
+            const q = query(matchesRef, orderBy("MatchDateTime", "desc"), limit(20));
+            const querySnapshot = await getDocs(q);
+
+            if (querySnapshot.empty) {
+                if (skeleton) skeleton.remove();
+                container.innerHTML = `<div class="text-slate-500 text-sm text-center py-6">No recent match history available.</div>`;
+                return;
+            }
+
+            const rawMatches = [];
+            querySnapshot.forEach((doc) => rawMatches.push({ id: doc.id, ...doc.data() }));
+
+            // Regroupement par date calendaire
+            const matchesByDateMap = new Map();
+            rawMatches.forEach(match => {
+                let dateStr = "Unknown Date";
+                if (match.MatchDateTime) {
+                    const d = new Date(match.MatchDateTime);
+                    dateStr = !isNaN(d.getTime()) ? d.toISOString().split('T')[0] : String(match.MatchDateTime).split('T')[0].split(' ')[0];
+                }
+                if (!matchesByDateMap.has(dateStr)) matchesByDateMap.set(dateStr, []);
+                matchesByDateMap.get(dateStr).push(match);
+            });
+
+            container.innerHTML = ""; // Nettoyage du conteneur
+            let totalCombosRendered = 0;
+            const maxCombosToDisplay = 3;
+
+            // Parcours des dates
+            for (const [dateKey, dateMatches] of matchesByDateMap.entries()) {
+                if (totalCombosRendered >= maxCombosToDisplay) break;
+
+                if (dateMatches.length < 3) continue;
+
+                const dateObj = new Date(dateKey);
+                const dayNumber = !isNaN(dateObj.getTime()) ? dateObj.getDate() : 1;
+                const formattedDate = !isNaN(dateObj.getTime()) 
+                    ? dateObj.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })
+                    : dateKey;
+
+                const topMatches = dateMatches.slice(0, 9);
+                const matchCount = topMatches.length;
+
+                let comboCount = 0;
+                if (matchCount >= 9) comboCount = 3;
+                else if (matchCount >= 6) comboCount = 2;
+                else if (matchCount >= 3) comboCount = 1;
+
+                // Limite pour ne pas dépasser 3 combos au total sur la section
+                comboCount = Math.min(comboCount, maxCombosToDisplay - totalCombosRendered);
+                if (comboCount <= 0) continue;
+
+                const isOddDay = (dayNumber % 2 !== 0);
+
+                // Bloc de Date
+                const dateBlock = document.createElement("div");
+                dateBlock.className = "bg-slate-900/40 border border-slate-800 rounded-2xl p-6 shadow-xl backdrop-blur-sm space-y-6";
+
+                dateBlock.innerHTML = `
+                    <div class="flex items-center gap-3 border-b border-slate-800/80 pb-4">
+                        <div class="w-3 h-3 rounded-full bg-emerald-500 shadow-lg shadow-emerald-500/50"></div>
+                        <h3 class="text-lg font-extrabold text-white">Date: ${formattedDate}</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+                `;
+
+                const combosGrid = dateBlock.querySelector(".grid");
+
+                // Génération des Cartes Combos
+                for (let i = 0; i < comboCount; i++) {
+                    const comboMatches = topMatches.slice(i * 3, (i + 1) * 3);
+                    
+                    // Règle déterministe identique à history.html
+                    const isComboWon = (i === 2 && isOddDay) ? false : true;
+
+                    // Calcul de la cote totale
+                    let totalOdd = 1.0;
+                    comboMatches.forEach(m => {
+                        const { odds } = getMatchOddsAndPick(m);
+                        totalOdd *= odds;
+                    });
+                    const calculatedOddFormatted = totalOdd.toFixed(2);
+
+                    const card = document.createElement("div");
+                    card.className = isComboWon 
+                        ? "bg-emerald-950/20 border border-emerald-500/40 rounded-2xl p-5 shadow-lg shadow-emerald-500/5 backdrop-blur-sm relative overflow-hidden flex flex-col justify-between"
+                        : "bg-rose-950/20 border border-rose-500/40 rounded-2xl p-5 shadow-lg shadow-rose-500/5 backdrop-blur-sm relative overflow-hidden flex flex-col justify-between";
+
+                    const cardHeaderHTML = `
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="${isComboWon ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' : 'bg-rose-500/20 text-rose-400 border-rose-500/30'} border px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
+                                <i class="fa-solid ${isComboWon ? 'fa-circle-check' : 'fa-circle-xmark'}"></i>
+                                ${isComboWon ? 'BET WON' : 'BET LOST'}
+                            </span>
+                            <div class="text-right">
+                                <span class="text-[10px] uppercase tracking-wider text-slate-400 block font-semibold">Total Odd</span>
+                                <span class="text-lg font-black ${isComboWon ? 'text-emerald-400' : 'text-rose-400 line-through'}">
+                                    ${isComboWon ? calculatedOddFormatted : '0.00 (LOST)'}
+                                </span>
+                            </div>
+                        </div>
+                    `;
+
+                    let tableRowsHTML = "";
+                    comboMatches.forEach((m, mIndex) => {
+                        const isMatchWon = isComboWon ? true : (mIndex !== 2);
+                        const homeName = m["Home Team"] || m.HomeTeam || "Home";
+                        const awayName = m["Away Team"] || m.AwayTeam || "Away";
+                        const matchTeam = m.Teams || `${homeName} vs ${awayName}`;
+                        const matchLeague = m.League || "Top League";
+                        const { odds: rawOdd } = getMatchOddsAndPick(m);
+
+                        const homeScore = m["Home Score"] ?? "-";
+                        const awayScore = m["Away Score"] ?? "-";
+                        const matchScore = `${homeScore} - ${awayScore}`;
+                        const matchOdds = rawOdd.toFixed(2);
+
+                        tableRowsHTML += `
+                            <tr class="hover:bg-slate-800/40 transition-colors border-b border-slate-800/40 last:border-0 text-xs">
+                                <td class="py-2.5 px-2 font-semibold text-slate-200">${matchTeam}</td>
+                                <td class="py-2.5 px-2 text-slate-400 text-[11px]">${matchLeague}</td>
+                                <td class="py-2.5 px-2 font-bold text-emerald-400">${matchScore}</td>
+                                <td class="py-2.5 px-2 font-medium text-slate-300">${matchOdds}</td>
+                                <td class="py-2.5 px-2 text-right">
+                                    <span class="inline-flex items-center gap-1 text-[10px] font-extrabold px-2 py-0.5 rounded ${isMatchWon ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'}">
+                                        ${isMatchWon ? 'WON' : 'LOST'}
+                                    </span>
+                                </td>
+                            </tr>
+                        `;
+                    });
+
+                    const tableHTML = `
+                        <div class="overflow-x-auto w-full my-2">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="border-b border-slate-800 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                                        <th class="pb-2 px-2">Teams</th>
+                                        <th class="pb-2 px-2">League</th>
+                                        <th class="pb-2 px-2">Score</th>
+                                        <th class="pb-2 px-2">Odds</th>
+                                        <th class="pb-2 px-2 text-right">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${tableRowsHTML}
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
+
+                    const cardFooterHTML = `
+                        <div class="mt-4 pt-3 border-t border-slate-800/60 flex items-center justify-between text-[11px] text-slate-500">
+                            <span>AlgoBet Verified System</span>
+                            <span class="font-mono"><i class="fa-solid fa-lock text-[10px] mr-1"></i>Deterministic</span>
+                        </div>
+                    `;
+
+                    card.innerHTML = cardHeaderHTML + tableHTML + cardFooterHTML;
+                    combosGrid.appendChild(card);
+                    totalCombosRendered++;
+                }
+
+                container.appendChild(dateBlock);
+            }
+
+        } catch (error) {
+            console.error("Error loading sample combos:", error);
+            if (skeleton) skeleton.remove();
+        }
+    }
+
+    // Exécution au chargement du DOM
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", loadSampleCombos);
+    } else {
+        loadSampleCombos();
+    }
+</script>
+
+
+</body>
+</html>
+

