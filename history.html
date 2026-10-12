@@ -95,17 +95,17 @@
         </section>
 
         <!-- 1.C INTELLIGENT FILTER BAR -->
-        <section class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 mb-8 backdrop-blur-md flex flex-wrap gap-4 items-center justify-between shadow-xl">
-            <div style="display: none;" class="flex flex-wrap items-center gap-4 flex-grow">
+        <section style="display: none;" class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 mb-8 backdrop-blur-md flex flex-wrap gap-4 items-center justify-between shadow-xl">
+            <div class="flex flex-wrap items-center gap-4 flex-grow">
                 <!-- Search Input -->
-                <div style="display: none;" class="relative flex-grow sm:flex-grow-0 min-w-[220px]">
+                <div class="relative flex-grow sm:flex-grow-0 min-w-[220px]">
                     <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
                     <input type="text" id="filter-search" placeholder="Search team or country..." 
                         class="w-full pl-10 pr-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-slate-200 text-sm focus:outline-none focus:border-emerald-500 transition-colors placeholder:text-slate-600">
                 </div>
 
                 <!-- League Select Dropdown -->
-                <div style="display: none;" class="flex-grow sm:flex-grow-0 min-w-[180px]">
+                <div class="flex-grow sm:flex-grow-0 min-w-[180px]">
                     <select id="filter-league" class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-slate-200 text-sm focus:outline-none focus:border-emerald-500 transition-colors cursor-pointer">
                         <option value="ALL">All Leagues</option>
                         <option value="England Premier League">England Premier League</option>
@@ -118,14 +118,14 @@
                 </div>
 
                 <!-- Date Filter Picker -->
-                <div style="display: none;" class="flex-grow sm:flex-grow-0">
+                <div class="flex-grow sm:flex-grow-0">
                     <input type="date" id="filter-date" 
                         class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-slate-200 text-sm focus:outline-none focus:border-emerald-500 transition-colors cursor-pointer">
                 </div>
             </div>
 
             <!-- Reset Button -->
-            <button style="display: none;" id="btn-reset-filters" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl text-sm font-semibold transition-all flex items-center gap-2">
+            <button id="btn-reset-filters" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl text-sm font-semibold transition-all flex items-center gap-2">
                 <i class="fa-solid fa-rotate-left text-xs"></i> Reset Filters
             </button>
         </section>
