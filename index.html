@@ -533,15 +533,9 @@
                 }
             } else {
                 container.innerHTML = `
-                    
+                    <a href="login.html" class="px-3.5 py-2 text-slate-300 hover:text-white font-medium text-xs transition-colors">Login.</a>
 
-                    <a href="signup.html" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition-all flex items-center gap-2 shadow-lg shadow-emerald-500/20" onclick="window.trackButtonClick('nav_login')">
-                        Login
-                    </a>
-
-                    <a href="signup.html" class="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition-all flex items-center gap-2 shadow-lg shadow-emerald-500/20" onclick="window.trackButtonClick('nav_get_started')">
-                        Signup
-                    </a>
+                    <a href="signup.html" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl shadow-md shadow-emerald-500/10 transition-all">Sign Up</a>
                 `;
             }
         }
