@@ -478,7 +478,8 @@
         upgradeBtn.classList.add("hidden");
       } else {
         statusBadge.className = "bg-amber-500/10 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-full text-xs font-semibold tracking-wide flex items-center gap-1.5";
-        statusBadge.innerHTML = `<span style="display: none;" class="w-2 h-2 rounded-full bg-amber-400"></span><span>NOT MEMBER</span>`;
+        // statusBadge.innerHTML = `<span style="display: none;" class="w-2 h-2 rounded-full bg-amber-400"></span><span>NOT MEMBER</span>`;
+        statusBadge.innerHTML = ``;
         upgradeBtn.classList.remove("hidden");
         upgradeBtn.addEventListener("click", () => collecterEtSauvegarder("click_become_member"));
       }
