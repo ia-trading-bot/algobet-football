@@ -47,16 +47,14 @@
     <!-- ========================================== -->
     <!-- A. NAVBAR FIXE (Header)                    -->
     <!-- ========================================== -->
-    <!-- 1.A NAVBAR FIXE -->
-    <header class="sticky top-0 z-50 backdrop-blur-md bg-slate-950/80 border-b border-slate-800/80 transition-all">
+    <header class="sticky top-0 z-50 glass-card border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            
             <!-- Logo -->
-            <a href="index.html" class="flex items-center gap-3 group">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-emerald-400 flex items-center justify-center shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform">
-                    <i class="fa-solid me-0 fa-chart-line text-slate-950 text-lg"></i>
+            <a href="index.html" class="flex items-center gap-3 group" onclick="trackButtonClick('navbar_logo')">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center text-slate-950 shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-chart-line text-xl font-bold"></i>
                 </div>
-                <span class="text-2xl font-extrabold tracking-tight text-white">Algo<span class="text-emerald-400">Football</span></span>
+                <span class="text-[22px] font-extrabold tracking-tight text-white">Algo<span class="text-emerald-400">Football</span></span>
             </a>
 
             <!-- Navigation Links -->
@@ -72,10 +70,10 @@
                 </a>
             </nav>
 
-            <!-- Dynamic User / Auth Zone -->
-            <div id="auth-zone" class="flex items-center gap-3">
-                <!-- Skeleton loader during auth check -->
-                <div class="w-32 h-9 bg-slate-800 rounded-lg animate-pulse"></div>
+            <!-- Dynamic User State Zone -->
+            <div id="nav-user-zone" class="flex items-center gap-3">
+                <!-- Injected via JavaScript based on session -->
+                <div class="animate-pulse bg-slate-800 h-9 w-32 rounded-lg"></div>
             </div>
         </div>
     </header>
@@ -537,7 +535,7 @@
                 container.innerHTML = `
                     <div class="flex items-center gap-2">
                         <a href="login.html" class="px-3.5 py-2 text-slate-300 hover:text-white font-medium text-sm transition-colors">Login</a>
-                        <a href="signup.html" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl shadow-md shadow-emerald-500/10 transition-all">SignUp</a>
+                        <a href="signup.html" class="px-3 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl shadow-md shadow-emerald-500/10 transition-all">SignUp</a>
                     </div>
                 `;
             }
